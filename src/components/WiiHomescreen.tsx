@@ -243,12 +243,14 @@ export const WiiHomescreen = () => {
 
       <div className="wii-footer">
         <div className="footer-left-button">Wii</div>
-        <div className="footer-center-time">
+        <div className="footer-center-time mt-2 mb-4">
           <span className="wii-digital-clock">
             {time} {ampm}
           </span>
           <br />
-          {formatDate(currentTime)}
+          <span className="font-semibold text-2xl text-gray-500">
+            {formatDate(currentTime)}
+          </span>
         </div>
         <div className="footer-right-button">✉️</div>
       </div>
