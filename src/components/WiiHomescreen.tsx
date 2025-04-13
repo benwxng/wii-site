@@ -17,7 +17,7 @@ interface WiiChannel {
 
 export const WiiHomescreen = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [channels, setChannels] = useState<WiiChannel[]>([
+  const channels: WiiChannel[] = [
     // Top row
     {
       id: "about",
@@ -129,10 +129,6 @@ export const WiiHomescreen = () => {
         <div>
           <h3 className="text-2xl font-bold mb-4">My Blog</h3>
           <p className="mb-4">Coming soon...</p>
-          <p>
-            I'll be sharing my thoughts on web development, design, and
-            technology.
-          </p>
         </div>
       ),
     },
@@ -265,7 +261,7 @@ export const WiiHomescreen = () => {
       color: "#DDDDDD",
       isEmpty: true,
     },
-  ]);
+  ];
 
   // Update time every minute
   useEffect(() => {
