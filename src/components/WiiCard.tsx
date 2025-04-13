@@ -4,21 +4,23 @@ import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 
 interface WiiCardProps {
+  id: string;
   title: string;
   color?: string;
-  icon?: string;
   content?: React.ReactNode;
   isEmpty?: boolean;
   coverImage?: string;
+  customHandler?: (id: string) => void;
 }
 
 export const WiiCard = ({
+  id,
   title,
   color = "#009EE3",
-  icon,
   content,
   isEmpty = false,
   coverImage,
+  customHandler,
 }: WiiCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -27,6 +29,12 @@ export const WiiCard = ({
 
   const handleCardClick = () => {
     if (animationInProgress || isEmpty) return;
+
+    // If a custom handler is provided, use it instead of default behavior
+    if (customHandler) {
+      customHandler(id);
+      return;
+    }
 
     if (!isExpanded) {
       const rect = cardRef.current?.getBoundingClientRect() || null;
@@ -81,13 +89,23 @@ export const WiiCard = ({
       }`}
       style={{
         backgroundColor: isExpanded ? "white" : color,
-        transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-        borderRadius: "24px",
+        transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+        borderRadius: "18px",
         aspectRatio: isEmpty || !isExpanded ? "16/9" : "auto",
         height: isExpanded ? "auto" : "unset",
         opacity: isEmpty ? 0.6 : 1,
         cursor: isEmpty ? "default" : isExpanded ? "default" : "pointer",
         overflow: "hidden",
+        padding: 0,
+        margin: 0,
+        ...(isExpanded && {
+          top: "10%",
+          left: "10%",
+          width: "80%",
+          height: "80%",
+          maxHeight: "80vh",
+          boxShadow: "0 4px 30px rgba(0, 0, 0, 0.2)",
+        }),
       }}
     >
       {coverImage && !isExpanded && !isEmpty && (
@@ -96,32 +114,27 @@ export const WiiCard = ({
             src={coverImage}
             alt={title}
             fill
-            className="object-cover"
+            className={`object-cover w-full h-full ${
+              id === "disc" ? "object-[center_30%]" : ""
+            }`}
+            sizes="(max-width: 768px) 100vw, 33vw"
             priority
           />
-        </div>
-      )}
-      {!isExpanded ? (
-        // Card view
-        <div className="flex flex-col items-center justify-center h-full py-6 px-2 relative z-10">
-          {icon && !isEmpty && (
-            <div className="flex justify-center items-center mb-4 w-full">
-              <div className="relative w-12 h-12 flex items-center justify-center">
-                <Image
-                  src={icon}
-                  alt={title}
-                  width={40}
-                  height={40}
-                  className="object-contain"
-                />
+          {title && (
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
+              <div className="text-left font-bold text-white text-sm pl-3 wii-card-title">
+                {title}
               </div>
             </div>
           )}
+        </div>
+      )}
+      {!isExpanded && !coverImage && !isEmpty && (
+        // Card view without cover image
+        <div className="flex flex-col items-start justify-end h-full py-6 px-4 relative z-10">
           {title && (
             <div
-              className={`text-center font-bold text-sm mt-auto px-2 py-1 rounded max-w-full ${
-                coverImage ? "text-white bg-black/50" : "text-white bg-black/30"
-              }`}
+              className="text-left font-bold text-sm px-2 py-1 rounded max-w-full text-white bg-black/30 wii-card-title"
               style={{
                 textShadow: "0.5px 0.5px 0px rgba(0,0,0,0.3)",
                 letterSpacing: "0.5px",
@@ -132,14 +145,15 @@ export const WiiCard = ({
             </div>
           )}
         </div>
-      ) : (
+      )}
+      {isExpanded && (
         // Expanded view
-        <div className="w-80% h-80%">
+        <div className="h-full flex flex-col">
           <div
-            className="flex justify-between items-center p-4"
+            className="flex justify-between items-center p-4 border-b"
             style={{ backgroundColor: color }}
           >
-            <h2 className="text-xl font-bold text-white">{title}</h2>
+            <h2 className="text-2xl font-bold text-black p-1">{title}</h2>
             <button
               onClick={(e) => {
                 e.stopPropagation();
@@ -151,7 +165,7 @@ export const WiiCard = ({
             </button>
           </div>
           <div
-            className="p-4 overflow-auto h-[calc(100vh-60px)]"
+            className="p-6 overflow-auto flex-grow"
             onClick={(e) => e.stopPropagation()}
           >
             {content}

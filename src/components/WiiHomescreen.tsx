@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { WiiCard } from "./WiiCard";
+import { motion } from "framer-motion";
 
 interface WiiChannel {
   id: string;
@@ -18,6 +19,24 @@ export const WiiHomescreen = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [channels, setChannels] = useState<WiiChannel[]>([
     // Top row
+    {
+      id: "about",
+      title: "about me",
+      color: "#FFFFFF",
+      icon: "/about-icon.svg",
+      content: (
+        <div className="z-40">
+          <h3 className="text-xl font-bold mb-4 text-black"> name: Ben Wang</h3>
+          <p className="mb-4 text-black">
+            currently studying cs/math @ swarthmore college
+          </p>
+          <p className="text-black">
+            This website is inspired by the Nintendo Wii interface, featuring
+            smooth transitions and a nostalgic design.
+          </p>
+        </div>
+      ),
+    },
     {
       id: "disc",
       title: "Disc Channel",
@@ -73,25 +92,6 @@ export const WiiHomescreen = () => {
     },
 
     // Middle row
-    {
-      id: "about",
-      title: "About Me",
-      color: "#FFFFFF",
-      icon: "/about-icon.svg",
-      content: (
-        <div>
-          <h3 className="text-2xl font-bold mb-4">About Me</h3>
-          <p className="mb-4">
-            Welcome to my personal site! I'm a developer who loves creating
-            interactive web experiences.
-          </p>
-          <p>
-            This website is inspired by the Nintendo Wii interface, featuring
-            smooth transitions and a nostalgic design.
-          </p>
-        </div>
-      ),
-    },
     {
       id: "projects",
       title: "Projects",
@@ -222,38 +222,168 @@ export const WiiHomescreen = () => {
     return `${day} ${month}/${dateNum}`;
   };
 
+  // Calculate delay based on grid position for diagonal animation
+  const calculateDelay = (index: number) => {
+    const row = Math.floor(index / 4);
+    const col = index % 4;
+    // Sum of row and column creates diagonal wave pattern
+    return (row + col) * 0.05 + 0.5; // Base delay of 0.3s plus 0.1s per diagonal step
+  };
+
   const { time, ampm } = formatTime(currentTime);
 
+  // Add new state for modal or other UI elements
+  const [showPhotoModal, setShowPhotoModal] = useState(false);
+  const [selectedImage, setSelectedImage] = useState("");
+
+  // Custom handlers for different cards
+  const handleCardClick = (id: string) => {
+    switch (id) {
+      case "disc":
+        // Open a media player or video
+        window.open("https://www.youtube.com/watch?v=VIDEO_ID", "_blank");
+        break;
+
+      case "mii":
+        // Toggle a character customization modal
+        console.log("Opening Mii creator");
+        // setShowMiiCreator(true);
+        break;
+
+      case "photo":
+        // Open a photo gallery modal
+        setSelectedImage("/pics/beachWeek.jpeg");
+        setShowPhotoModal(true);
+        break;
+
+      case "shop":
+        // Navigate to a shop page
+        window.location.href = "/shop";
+        break;
+
+      case "about":
+        // Default expand behavior (no custom handler needed)
+        break;
+
+      case "projects":
+        // Open project details in a new tab
+        break;
+
+      case "blog":
+        // Navigate to blog
+        window.location.href = "/blog";
+        break;
+
+      case "contact":
+        // Show contact form
+        // setShowContactForm(true);
+        break;
+
+      default:
+        // Default behavior for other cards
+        console.log(`No custom handler for ${id}`);
+    }
+  };
+
   return (
-    <div className="flex flex-col h-screen bg-gray-100 retro-container">
+    <div className="flex flex-col h-screen bg-gray-100 retro-container overflow-hidden">
       {/* Main grid for channels */}
-      <div className=" w-full p-24 grid grid-cols-4 gap-6 max-w-full">
-        {channels.map((channel) => (
-          <WiiCard
+      <div className="w-full p-24 grid grid-cols-4 gap-6 max-w-full">
+        {channels.map((channel, index) => (
+          <motion.div
             key={channel.id}
-            title={channel.title}
-            color={channel.color}
-            icon={channel.icon}
-            content={channel.content}
-            isEmpty={channel.isEmpty}
-            coverImage={channel.coverImage}
-          />
+            initial={{ opacity: 0, scale: 1 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{
+              type: "spring",
+              damping: 20,
+              stiffness: 50,
+              delay: 0.6 + calculateDelay(index),
+              duration: 2,
+            }}
+          >
+            <WiiCard
+              id={channel.id}
+              title={channel.title}
+              color={channel.color}
+              content={channel.content}
+              isEmpty={channel.isEmpty}
+              coverImage={channel.coverImage}
+              customHandler={
+                // Only provide custom handler for specific cards
+                ["disc", "mii", "photo", "shop", "blog", "contact"].includes(
+                  channel.id
+                )
+                  ? handleCardClick
+                  : undefined
+              }
+            />
+          </motion.div>
         ))}
       </div>
 
-      <div className="wii-footer">
-        <div className="footer-left-button">Wii</div>
-        <div className="footer-center-time mt-2 mb-4">
-          <span className="wii-digital-clock">
+      {/* Photo modal */}
+      {showPhotoModal && (
+        <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-8">
+          <div className="bg-white rounded-lg p-4 max-w-3xl w-full">
+            <div className="flex justify-between mb-4">
+              <h2 className="text-xl font-bold">Photo Viewer</h2>
+              <button
+                onClick={() => setShowPhotoModal(false)}
+                className="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center"
+              >
+                ✕
+              </button>
+            </div>
+            <div className="relative h-80 w-full">
+              <Image
+                src={selectedImage}
+                alt="Selected photo"
+                fill
+                className="object-contain"
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
+      <motion.div
+        className="wii-footer fixed bottom-0 w-full flex justify-between items-center px-8"
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{
+          type: "spring",
+          damping: 20,
+          stiffness: 50,
+          delay: 0.2,
+          duration: 1.2,
+        }}
+      >
+        <button
+          onClick={() => (window.location.href = "mailto:benxwang7@gmail.com")}
+          className="group transition-transform hover:scale-105 active:scale-95 cursor-pointer"
+        >
+          <div className="text-xl text-gray-500 bg-[#dbefff] w-[clamp(60px,8vw,80px)] h-[clamp(60px,8vw,80px)] flex items-center justify-center rounded-full border-2 border-[#8DCFF4] font-bold shadow-inner shadow-md group-hover:bg-[#c5e4ff] group-active:shadow-inner ml-8">
+            Wii
+          </div>
+        </button>
+        <div className="flex flex-col items-center justify-center">
+          <span className="wii-digital-clock mt-4">
             {time} {ampm}
           </span>
-          <br />
-          <span className="font-semibold text-2xl text-gray-500">
+          <span className="font-semibold text-[clamp(1.2rem,2vw,2rem)] text-gray-500">
             {formatDate(currentTime)}
           </span>
         </div>
-        <div className="footer-right-button">✉️</div>
-      </div>
+        <button
+          onClick={() => (window.location.href = "mailto:benxwang7@gmail.com")}
+          className="group transition-transform hover:scale-105 active:scale-95 cursor-pointer"
+        >
+          <div className="text-xl bg-[#dbefff] w-[clamp(60px,8vw,80px)] h-[clamp(60px,8vw,80px)] flex items-center justify-center rounded-full border-2 border-[#8DCFF4] font-bold shadow-inner shadow-md group-hover:bg-[#c5e4ff] group-active:shadow-inner mr-8">
+            ✉️
+          </div>
+        </button>
+      </motion.div>
     </div>
   );
 };
