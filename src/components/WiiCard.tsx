@@ -115,14 +115,22 @@ export const WiiCard = ({
             alt={title}
             fill
             className={`object-cover w-full h-full ${
-              id === "disc" ? "object-[center_30%]" : ""
+              id === "thanks"
+                ? "object-[center_30%]"
+                : id === "blog"
+                ? "object-[center_60%] scale-[1.02]"
+                : id === "photo"
+                ? "object-[center_40%]"
+                : id === "projects" || id === "photos"
+                ? "object-none scale-[0.40] object-center"
+                : ""
             }`}
             sizes="(max-width: 768px) 100vw, 33vw"
             priority
           />
           {title && (
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
-              <div className="text-left font-bold text-white text-sm pl-3 wii-card-title">
+              <div className="text-left font-gothic-130 font-bold text-white text-sm pl-3 wii-card-title">
                 {title}
               </div>
             </div>
@@ -134,7 +142,7 @@ export const WiiCard = ({
         <div className="flex flex-col items-start justify-end h-full py-6 px-4 relative z-10">
           {title && (
             <div
-              className="text-left font-bold text-sm px-2 py-1 rounded max-w-full text-white bg-black/30 wii-card-title"
+              className="text-left font-gothic-120 text-sm px-2 py-1 rounded max-w-full text-white bg-black/30 wii-card-title"
               style={{
                 textShadow: "0.5px 0.5px 0px rgba(0,0,0,0.3)",
                 letterSpacing: "0.5px",
@@ -150,10 +158,10 @@ export const WiiCard = ({
         // Expanded view
         <div className="h-full flex flex-col">
           <div
-            className="flex justify-between items-center p-4 border-b"
-            style={{ backgroundColor: color }}
+            className="flex justify-between items-center p-4 border-b border-black"
+            style={{ backgroundColor: "#FFFFFF" }}
           >
-            <h2 className="text-2xl font-bold text-black p-1">{title}</h2>
+            <h2 className="text-2xl font-gothic-120 text-black p-1">{title}</h2>
             <button
               onClick={(e) => {
                 e.stopPropagation();

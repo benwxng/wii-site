@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { WiiCard } from "./WiiCard";
 import { motion } from "framer-motion";
-
+import AnimatedLink from "./AnimatedLink";
 interface WiiChannel {
   id: string;
   title: string;
@@ -22,70 +22,134 @@ export const WiiHomescreen = () => {
     {
       id: "about",
       title: "about me",
-      color: "#FFFFFF",
+      color: "#DDDDDD",
       icon: "/about-icon.svg",
+      coverImage: "/pics/memenu.jpg",
       content: (
         <div className="z-40">
-          <h3 className="text-xl font-bold mb-4 text-black"> name: Ben Wang</h3>
-          <p className="mb-4 text-black">
-            currently studying cs/math @ swarthmore college
+          <h3 className="text-xl mb-4 text-black font-gothic-130">
+            name: Ben Wang
+          </h3>
+          <p className="text-xl text-black font-gothic-130">currently:</p>
+          <ul className="list-disc list-inside text-black font-gothic-120">
+            <li className="ml-2 md:ml-4">cs/math @ swarthmore</li>
+            <li className="ml-2 md:ml-4">campus growth @ perplexity</li>
+            <li className="ml-2 md:ml-4">
+              crafting culture @{" "}
+              <AnimatedLink
+                href="https://www.swatsynthesis.info"
+                className="text-slate-500"
+                external={true}
+              >
+                synthesis
+              </AnimatedLink>
+            </li>
+            <br />
+
+            <p className="text-xl text-black font-gothic-130">previously:</p>
+            <ul className="list-disc list-inside text-black font-gothic-120">
+              <li className="ml-2 md:ml-4">
+                growth ops @{" "}
+                <AnimatedLink
+                  href="https://whop.com/discover/kaizen-trading/"
+                  className="text-slate-500"
+                  external={true}
+                >
+                  kaizen
+                </AnimatedLink>{" "}
+              </li>
+              <li className="ml-2 md:ml-4">sold $40k of shoes at 14</li>
+              <li className="ml-2 md:ml-4">
+                #1 tennis player in maryland 4+ years
+              </li>
+              <li className="ml-2 md:ml-4">picked piplup on pokemon diamond</li>
+            </ul>
+
+            <br />
+
+            <span className="text-gray-700 italic">
+              say hi @{" "}
+              <AnimatedLink
+                href="mailto:benxwang7@gmail.com"
+                className="text-slate-500"
+                external={true}
+              >
+                benxwang7
+              </AnimatedLink>{" "}
+              at gmail dot com
+            </span>
+          </ul>
+        </div>
+      ),
+    },
+    {
+      id: "reading",
+      title: "reading",
+      color: "#FFFFFF ",
+      coverImage: "/pics/books.jpg",
+      content: (
+        <div>
+          <p className="text-xl text-black font-gothic-130 mb-1">current:</p>
+          <ul className="list-disc list-inside">
+            <li className="ml-4 text-black font-gothic-120">
+              Psycho-Cybernetics
+            </li>
+          </ul>
+
+          <br />
+          <p className="text-xl text-black font-gothic-130 mb-1">
+            personal podium:
           </p>
-          <p className="text-black">
-            This website is inspired by the Nintendo Wii interface, featuring
-            smooth transitions and a nostalgic design.
+          <ul className=" text-black list-disc list-inside">
+            <li className="ml-4 font-gothic-120">Meditations</li>
+            <li className="ml-4 font-gothic-120">Letters to a Young Poet</li>
+            <li className="ml-4 font-gothic-120">Shoe Dog</li>
+            <li className="ml-4 font-gothic-120">Letters from a Stoic</li>
+            <li className="ml-4 font-gothic-120">
+              Tommorrow, and Tomorrow, and Tomorrow
+            </li>
+            <li className="ml-4 font-gothic-120">Greenlights</li>
+            <li className="ml-4 font-gothic-120">Ender&apos;s Game</li>
+          </ul>
+
+          <br />
+          <p className="text-gray-700 font-gothic-120">
+            got recs? email @ benxwang7 at gmail dot com
           </p>
         </div>
       ),
     },
     {
-      id: "disc",
-      title: "Disc Channel",
+      id: "writing",
+      title: "writing",
+      color: "#000000",
+      icon: "/blog-icon.svg",
+      coverImage: "/pics/writing.jpg",
+      content: (
+        <div>
+          <h3 className="text-2xl font-bold mb-4">My Blog</h3>
+          <p className="mb-4">Coming soon...</p>
+          <p>
+            I'll be sharing my thoughts on web development, design, and
+            technology.
+          </p>
+        </div>
+      ),
+    },
+    {
+      id: "thanks",
+      title: "acknowledgements",
       color: "#000000",
       icon: "/disc-icon.svg",
       coverImage: "/pics/beachWeek.jpeg",
       content: (
         <div>
-          <h3 className="text-2xl font-bold mb-4">Disc Channel</h3>
-          <p className="mb-4">
-            This would be where your disc content would appear.
-          </p>
-        </div>
-      ),
-    },
-    {
-      id: "mii",
-      title: "Mii Channel",
-      color: "#FFFFFF",
-      icon: "/mii-icon.svg",
-      content: (
-        <div>
-          <h3 className="text-2xl font-bold mb-4">Mii Channel</h3>
-          <p className="mb-4">Create and customize your Mii characters here.</p>
-        </div>
-      ),
-    },
-    {
-      id: "photo",
-      title: "Photo Channel",
-      color: "#FFFFFF",
-      icon: "/photo-icon.svg",
-      content: (
-        <div>
-          <h3 className="text-2xl font-bold mb-4">Photo Channel</h3>
-          <p className="mb-4">View and edit your photos.</p>
-        </div>
-      ),
-    },
-    {
-      id: "shop",
-      title: "Wii Shop",
-      color: "#FFFFFF",
-      icon: "/shop-icon.svg",
-      content: (
-        <div>
-          <h3 className="text-2xl font-bold mb-4">Wii Shop</h3>
-          <p className="mb-4">
-            Browse and purchase new games and applications.
+          <p className=" text-black font-gothic-120">
+            thank you ...
+            <br />
+            thank you ...
+            <br />
+            thank you ...
           </p>
         </div>
       ),
@@ -97,6 +161,7 @@ export const WiiHomescreen = () => {
       title: "Projects",
       color: "#FFFFFF",
       icon: "/projects-icon.svg",
+      coverImage: "/pics/penguinbuidling.webp",
       content: (
         <div>
           <h3 className="text-2xl font-bold mb-4">My Projects</h3>
@@ -108,19 +173,17 @@ export const WiiHomescreen = () => {
         </div>
       ),
     },
+
     {
-      id: "blog",
-      title: "Blog",
+      id: "photos",
+      title: "Photos",
       color: "#FFFFFF",
-      icon: "/blog-icon.svg",
+      icon: "/photo-icon.svg",
+      coverImage: "/pics/penguinbuidling.webp",
       content: (
         <div>
-          <h3 className="text-2xl font-bold mb-4">My Blog</h3>
-          <p className="mb-4">Coming soon...</p>
-          <p>
-            I'll be sharing my thoughts on web development, design, and
-            technology.
-          </p>
+          <h3 className="text-2xl font-bold mb-4">Photo Channel</h3>
+          <p className="mb-4">View and edit your photos.</p>
         </div>
       ),
     },
@@ -159,6 +222,20 @@ export const WiiHomescreen = () => {
               Twitter
             </a>
           </div>
+        </div>
+      ),
+    },
+    {
+      id: "shop",
+      title: "Wii Shop",
+      color: "#FFFFFF",
+      icon: "/shop-icon.svg",
+      content: (
+        <div>
+          <h3 className="text-2xl font-bold mb-4">Wii Shop</h3>
+          <p className="mb-4">
+            Browse and purchase new games and applications.
+          </p>
         </div>
       ),
     },
@@ -244,7 +321,7 @@ export const WiiHomescreen = () => {
         window.open("https://www.youtube.com/watch?v=VIDEO_ID", "_blank");
         break;
 
-      case "mii":
+      case "reading":
         // Toggle a character customization modal
         console.log("Opening Mii creator");
         // setShowMiiCreator(true);
@@ -269,9 +346,9 @@ export const WiiHomescreen = () => {
         // Open project details in a new tab
         break;
 
-      case "blog":
+      case "writing":
         // Navigate to blog
-        window.location.href = "/blog";
+        window.open("https://benxwang.substack.com/", "_blank");
         break;
 
       case "contact":
@@ -295,11 +372,9 @@ export const WiiHomescreen = () => {
             initial={{ opacity: 0, scale: 1 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{
-              type: "spring",
-              damping: 20,
-              stiffness: 50,
+              type: "ease-in-out",
               delay: 0.6 + calculateDelay(index),
-              duration: 2,
+              duration: 1.2,
             }}
           >
             <WiiCard
@@ -311,9 +386,7 @@ export const WiiHomescreen = () => {
               coverImage={channel.coverImage}
               customHandler={
                 // Only provide custom handler for specific cards
-                ["disc", "mii", "photo", "shop", "blog", "contact"].includes(
-                  channel.id
-                )
+                ["disc", "mii", "photo", "shop", "writing"].includes(channel.id)
                   ? handleCardClick
                   : undefined
               }
