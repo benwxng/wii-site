@@ -154,7 +154,7 @@ export const WiiHomescreen = () => {
     // Middle row
     {
       id: "projects",
-      title: "Projects",
+      title: "projects",
       color: "#FFFFFF",
       icon: "/projects-icon.svg",
       coverImage: "/pics/penguinbuidling.webp",
@@ -172,7 +172,7 @@ export const WiiHomescreen = () => {
 
     {
       id: "photos",
-      title: "Photos",
+      title: "photos",
       color: "#FFFFFF",
       icon: "/photo-icon.svg",
       coverImage: "/pics/penguinbuidling.webp",
@@ -223,7 +223,7 @@ export const WiiHomescreen = () => {
     },
     {
       id: "shop",
-      title: "Wii Shop",
+      title: "music/idkyet",
       color: "#FFFFFF",
       icon: "/shop-icon.svg",
       content: (
