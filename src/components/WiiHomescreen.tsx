@@ -28,7 +28,7 @@ export const WiiHomescreen = () => {
       content: (
         <div className="z-40">
           <h3 className="text-xl mb-4 text-black font-gothic-130">
-            name: Ben Wang
+            name: ben wang
           </h3>
           <p className="text-xl text-black font-gothic-130">currently:</p>
           <ul className="list-disc list-inside text-black font-gothic-120">
@@ -92,7 +92,7 @@ export const WiiHomescreen = () => {
           <p className="text-xl text-black font-gothic-130 mb-1">current:</p>
           <ul className="list-disc list-inside">
             <li className="ml-4 text-black font-gothic-120">
-              Psycho-Cybernetics
+              psycho-cybernetics
             </li>
           </ul>
 
@@ -101,15 +101,15 @@ export const WiiHomescreen = () => {
             personal podium:
           </p>
           <ul className=" text-black list-disc list-inside">
-            <li className="ml-4 font-gothic-120">Meditations</li>
-            <li className="ml-4 font-gothic-120">Letters to a Young Poet</li>
-            <li className="ml-4 font-gothic-120">Shoe Dog</li>
-            <li className="ml-4 font-gothic-120">Letters from a Stoic</li>
+            <li className="ml-4 font-gothic-120">meditations</li>
+            <li className="ml-4 font-gothic-120">letters to a young poet</li>
+            <li className="ml-4 font-gothic-120">shoe dog</li>
+            <li className="ml-4 font-gothic-120">letters from a stoic</li>
             <li className="ml-4 font-gothic-120">
-              Tommorrow, and Tomorrow, and Tomorrow
+              tomorrow, and tomorrow, and tomorrow
             </li>
-            <li className="ml-4 font-gothic-120">Greenlights</li>
-            <li className="ml-4 font-gothic-120">Ender&apos;s Game</li>
+            <li className="ml-4 font-gothic-120">greenlights</li>
+            <li className="ml-4 font-gothic-120">ender&apos;s game</li>
           </ul>
 
           <br />
@@ -172,7 +172,7 @@ export const WiiHomescreen = () => {
 
     {
       id: "photos",
-      title: "photos",
+      title: "coming soon",
       color: "#FFFFFF",
       icon: "/photo-icon.svg",
       coverImage: "/pics/penguinbuidling.webp",
@@ -361,7 +361,7 @@ export const WiiHomescreen = () => {
   return (
     <div className="flex flex-col h-screen bg-gray-100 retro-container overflow-hidden">
       {/* Main grid for channels */}
-      <div className="w-full p-24 grid grid-cols-4 gap-6 max-w-full">
+      <div className="w-full p-4 md:p-12 lg:p-24 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-full">
         {channels.map((channel, index) => (
           <motion.div
             key={channel.id}
@@ -372,6 +372,7 @@ export const WiiHomescreen = () => {
               delay: 0.6 + calculateDelay(index),
               duration: 1.2,
             }}
+            className={`${index >= 8 ? "hidden lg:block" : ""}`}
           >
             <WiiCard
               id={channel.id}
@@ -417,7 +418,7 @@ export const WiiHomescreen = () => {
       )}
 
       <motion.div
-        className="wii-footer fixed bottom-0 w-full flex justify-between items-center px-8"
+        className="wii-footer fixed bottom-0 w-full flex justify-between items-center px-4 md:px-8 py-2 md:py-4"
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{
@@ -432,15 +433,15 @@ export const WiiHomescreen = () => {
           onClick={() => (window.location.href = "mailto:benxwang7@gmail.com")}
           className="group transition-transform hover:scale-105 active:scale-95 cursor-pointer"
         >
-          <div className="text-xl text-gray-500 bg-[#dbefff] w-[clamp(60px,8vw,80px)] h-[clamp(60px,8vw,80px)] flex items-center justify-center rounded-full border-2 border-[#8DCFF4] font-bold shadow-inner shadow-md group-hover:bg-[#c5e4ff] group-active:shadow-inner ml-8">
+          <div className="text-base md:text-xl text-gray-500 bg-[#dbefff] w-[clamp(40px,8vw,80px)] h-[clamp(40px,8vw,80px)] flex items-center justify-center rounded-full border-2 border-[#8DCFF4] font-bold shadow-inner shadow-md group-hover:bg-[#c5e4ff] group-active:shadow-inner ml-2 md:ml-8">
             Wii
           </div>
         </button>
         <div className="flex flex-col items-center justify-center">
-          <span className="wii-digital-clock mt-4">
+          <span className="wii-digital-clock mt-2 md:mt-4 text-base md:text-xl">
             {time} {ampm}
           </span>
-          <span className="font-semibold text-[clamp(1.2rem,2vw,2rem)] text-gray-500">
+          <span className="font-semibold text-[clamp(0.8rem,2vw,2rem)] text-gray-500">
             {formatDate(currentTime)}
           </span>
         </div>
@@ -448,7 +449,7 @@ export const WiiHomescreen = () => {
           onClick={() => (window.location.href = "mailto:benxwang7@gmail.com")}
           className="group transition-transform hover:scale-105 active:scale-95 cursor-pointer"
         >
-          <div className="text-xl bg-[#dbefff] w-[clamp(60px,8vw,80px)] h-[clamp(60px,8vw,80px)] flex items-center justify-center rounded-full border-2 border-[#8DCFF4] font-bold shadow-inner shadow-md group-hover:bg-[#c5e4ff] group-active:shadow-inner mr-8">
+          <div className="text-base md:text-xl bg-[#dbefff] w-[clamp(40px,8vw,80px)] h-[clamp(40px,8vw,80px)] flex items-center justify-center rounded-full border-2 border-[#8DCFF4] font-bold shadow-inner shadow-md group-hover:bg-[#c5e4ff] group-active:shadow-inner mr-2 md:mr-8">
             ✉️
           </div>
         </button>
